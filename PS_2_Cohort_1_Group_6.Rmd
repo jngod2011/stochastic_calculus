@@ -1,0 +1,77 @@
+---
+header-includes:
+- \usepackage{amssymb, amsmath, amsthm}
+- \usepackage{tabu}
+- \newcommand{\E}{\mathbb{E}}
+- \newcommand{\var}{{\rm Var}}
+- \newcommand{\N}{\mathcal{N}}
+output: pdf_document
+---
+
+\noindent \begin{tabu} to \textwidth {@{}X[4 l] @{}X[r]}
+  \textbf{HW 2}           & \\ 
+  \textbf{MFE 403: Stochastic Calculus}   & \\ 
+  \textbf{Professor Stavros Panageas}         & \\
+  \textbf{Group 6}          &\\
+  \textbf{Students: Xiahao Wang, Juan Manuel Ferreyra Maspero, Xinyue Zhu, Yichu Li, Mu Lin}
+\end{tabu}
+
+
+## Problem 1
+
+Let $Z_s = W_s^3$
+
+Apply Ito's lemma to get:
+
+$$dZ_s = 3W_s^2dW_s + \frac{1}{2} \cdot 6W_s(dW_s)^2$$
+Given:
+$$Z(0) = 0$$
+
+Integrate on both sides to get:
+
+$$\int_0^tdZ_s = W_t^3$$
+$$W_t^3 = 3\int_0^tW_s^2dW_s + W_sds$$
+$$\int_0^tW_s^2dW_s = \frac{1}{3}W_t^3 - \int_0^tW_sds$$
+
+## Problem 2 
+
+$$X(t) = W_1(t) \times W_2(t)$$
+Fix any $u < t$, we have
+$$E[X_t |\mathcal{F}_u] = E[W_1(t) \times W_2(t) | \mathcal{F}_u]$$
+$$= E[W_1(t)|\mathcal{F}_u] \times E[W_2(t)|\mathcal{F}_u] $$
+$$ = W_1(u) \times W_2(u) = X(u)$$
+Hence it is a martingale
+
+## Problem 3
+$$X_t = \int_0^t g(s)dW_s$$
+$$dX_t = g(t)W_t$$
+$$Z_t = e^{-\frac{\eta^2}{2}\int_0^tg^2(s)ds + \eta\int_0^tg(s)dW_s}$$
+Apply Ito's Lemma:
+$$dZ_t = -\frac{\eta^2}{2}g^2(t)dt\cdot Z_t + \eta g(t)dW_t \cdot Z_t + \frac{\eta^2}{2}g^2(t)dtZ_t$$
+$$dZ_t = \eta g(t)dW_t \cdot Z_t =\eta dX_t \cdot Z_t $$
+$$Z(0) =1$$
+$$E[\int_0^tdZ_t] = E[\int_0^t\eta dX_s \cdot Z_s]$$
+$$E[Z_t - Z(0)] = E[\int_0^t\eta g(s)dW_sZ_s] = \eta \sum_{k=0}^{n-1} E[g(t_k)E_{t_k}[W(t_{k+1})-W(t_{k})] \cdot Z_k]$$
+hence $$ E[Z_t] = 1 = Z(0)$$ 
+It is a martingale
+$$E[Z_t] = e^{-\frac{\eta^2}{2}\int_0^tg^2(s)ds }E[e^{\eta\int_0^tg(s)dW_s}] = 1$$
+$$E[e^{\eta\int_0^tg(s)dW_s}] = e^{\frac{\eta^2}{2}\int_0^tg^2(s)ds} $$
+$$E[e^{\eta X_t}] = e^{\frac{\eta^2}{2}\int_0^tg^2(s)ds}$$
+Based on the Moment Generating function, the Standard Deviation should be: $$\sqrt{\int_0^tg^2(s)ds}$$
+
+## Problem 4
+
+$$Z_t = W_t^k$$
+Apply Ito's Lemma
+$$dZ_t = 0 \cdot dt + kW_t^{k-1}dW_t + \frac{1}{2}[k(k-1)W_t^{k-2}(dW_t)^2]$$
+$$=kW_t^{k-1}dW_t + \frac{1}{2}[k(k-1)W_t^{k-2}dt]$$
+$Z_0 = 0$
+$$\int_0^tdZ_s = Z_t = W_t^k$$ 
+$$W_t^k = \int_0^tkW^{k-1}dW_s + \frac{1}{2}k(k-1)W_s^{k-2}ds$$
+
+$$B_k(t) = E[Z_t] = E[W_t^k]$$
+
+$$= E[\int_0^tkW^{k-1}dW_s + \frac{1}{2}k(k-1)W_s^{k-2}ds]$$
+
+$$ =  0 + \frac{1}{2}k(k-1)\int_0^tE[W_s^{k-2}]ds$$
+$$ = \frac{1}{2}k(k-1)\int_0^tB_{k-2}(s)ds$$
